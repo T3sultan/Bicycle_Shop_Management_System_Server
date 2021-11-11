@@ -41,6 +41,23 @@ async function run() {
             res.send(result);
         });
 
+        // single service
+        app.get("/singleProducts/:id", async (req, res) => {
+            console.log(req.params.id);
+            const result = await productsCollection
+                .find({ _id: ObjectId(req.params.id) })
+                .toArray();
+            res.send(result[0]);
+            console.log(result);
+        });
+        // insert order and
+
+        app.post("/placeOrders", async (req, res) => {
+            const result = await ordersCollection.insertOne(req.body);
+            res.send(result);
+        });
+
+
 
     }
     finally {
