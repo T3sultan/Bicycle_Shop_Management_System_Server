@@ -113,7 +113,25 @@ async function run() {
             console.log(result);
             res.send(result);
         });
+        /// all order
+        app.get("/allOrders", async (req, res) => {
+            // console.log("hello");
+            const result = await ordersCollection.find({}).toArray();
+            res.send(result);
+        });
 
+        // status update
+        app.put("/statusUpdate/:id", async (req, res) => {
+            const filter = { _id: ObjectId(req.params.id) };
+            console.log(req.params.id);
+            const result = await ordersCollection.updateOne(filter, {
+                $set: {
+                    status: req.body.status,
+                },
+            });
+            res.send(result);
+            console.log(result);
+        });
 
 
 
