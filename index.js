@@ -84,8 +84,35 @@ async function run() {
             const result = await ordersCollection.deleteOne(query);
             res.json(result);
         })
+        app.post("/addUserInfo", async (req, res) => {
+            console.log("req.body");
+            const result = await usersCollection.insertOne(req.body);
+            res.send(result);
+            console.log(result);
+        });
 
 
+        //  make admin
+
+        app.put("/makeAdmin", async (req, res) => {
+            const filter = { email: req.body.email };
+            const result = await usersCollection.find(filter).toArray();
+            if (result) {
+                const documents = await usersCollection.updateOne(filter, {
+                    $set: { role: "admin" },
+                });
+                console.log(documents);
+            }
+
+        });
+        // check admin or not
+        app.get("/checkAdmin/:email", async (req, res) => {
+            const result = await usersCollection
+                .find({ email: req.params.email })
+                .toArray();
+            console.log(result);
+            res.send(result);
+        });
 
 
 
