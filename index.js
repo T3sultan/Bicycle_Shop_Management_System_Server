@@ -71,11 +71,21 @@ async function run() {
             res.send(result);
         });
 
-           // get all review
-           app.get("/reviewItem", async (req, res) => {
+        // get all review
+        app.get("/reviewItem", async (req, res) => {
             const result = await reviewCollection.find({}).toArray();
             res.send(result);
         });
+        //DELETE API
+        app.delete('/myOrder/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('deleted id')
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            res.json(result);
+        })
+
+
 
 
 
