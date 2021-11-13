@@ -50,6 +50,16 @@ async function run() {
             res.send(result[0]);
             console.log(result);
         });
+        // manage products delete
+        app.delete('/manageProducts/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('deleted id')
+            const query = { _id: ObjectId(id) };
+            const result = await productsCollection.deleteOne(query);
+            res.json(result);
+        })
+
+
         // insert order and
 
         app.post("/placeOrders", async (req, res) => {
